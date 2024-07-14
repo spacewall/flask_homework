@@ -1,8 +1,9 @@
 import os
+import datetime
 import atexit
 
-from sqlalchemy import ForeignKey, Integer, String, Text, create_engine, Column, DateTime, func
-from sqlalchemy.orm import sessionmaker, declarative_base, relationship
+from sqlalchemy import Integer, String, Text, create_engine, DateTime, func, Column
+from sqlalchemy.orm import sessionmaker, declarative_base
 
 POSTGRES_PASSWORD = os.getenv('POSTGRES_PASSWORD', 'password')
 POSTGRES_USER = os.getenv('POSTGRES_USER', 'user')
@@ -20,31 +21,22 @@ Session = sessionmaker(engine)
 
 Base = declarative_base()
 
-
+ 
 class Advertisement(Base):
     __tablename__ = 'ads'
 
     id = Column(Integer, primary_key=True)
-    header = Column(String(100), unique=True, nullable=False)
+    header = Column(String(100), unique=True, nullable=False, index=True)
     description = Column(Text)
     created_at = Column(DateTime, server_default=func.now())
-    owner = Column(String, ForeignKey('user.name', ondelete='CASCADE'), nullable=False)
-
-
-class User(Base):
-    __tablename__ = 'users'
-
-    id = Column(Integer, primary_key=True)
-    name = Column(String(100), nullable=False, unique=True)
-    password = Column(String(100), nullable=False)
-    registration_time = Column(DateTime, server_default=func.now())
 
     @property
     def dict(self) -> dict:
         return {
             'id': self.id,
-            'name': self.name,
-            'registrated_at': self.registration_time
+            'header': self.header,
+            'description': self.description,
+            'created_at': self.created_at.isoformat()
         }
 
 
