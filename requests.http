@@ -1,9 +1,26 @@
-@baseUrl = http://localhost:8080
+@base_url = http://localhost:8080
 
-POST {{baseUrl}}/
+POST {{base_url}}/
 Content-Type: application/json
 
 {
-  "header": "100",
+  "header": "1",
   "description": "description"
 }
+###
+
+GET {{base_url}}/12/
+Content-Type: application/json
+###
+
+PATCH {{base_url}}/12/
+Content-Type: application/json
+
+{
+  "header": "2",
+  "description": "new_description"
+}
+###
+
+DELETE {{base_url}}/10/
+Content-Type: application/json

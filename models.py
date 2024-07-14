@@ -1,13 +1,15 @@
 import os
-import datetime
 import atexit
 
-from sqlalchemy import Integer, String, Text, create_engine, DateTime, func, Column
+import dotenv
 from sqlalchemy.orm import sessionmaker, declarative_base
+from sqlalchemy import Integer, String, Text, create_engine, DateTime, func, Column
 
-POSTGRES_PASSWORD = os.getenv('POSTGRES_PASSWORD', 'password')
-POSTGRES_USER = os.getenv('POSTGRES_USER', 'user')
-POSTGRES_DB = os.getenv('POSTGRES_DB', 'lecture')
+CONFIGURATION = dotenv.dotenv_values('.env')
+
+POSTGRES_PASSWORD = CONFIGURATION['POSTGRES_PASSWORD']
+POSTGRES_USER = CONFIGURATION['POSTGRES_USER']
+POSTGRES_DB = CONFIGURATION['POSTGRES_DB']
 POSTGRES_HOST = os.getenv('POSTGRES_HOST', '127.0.0.1')
 POSTGRES_PORT = os.getenv('POSTGRES_PORT', '5431')
 
