@@ -1,0 +1,9 @@
+@baseUrl = http://localhost:8080
+
+POST {{baseUrl}}/
+Content-Type: application/json
+
+{
+  "header": "100",
+  "description": "description"
+}
